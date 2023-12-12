@@ -1,5 +1,8 @@
 const express = require('express');
 const mainRouter = require('./routes/main');
+const methodOverride = require("method-override");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 const app = express();
 
@@ -8,6 +11,17 @@ app.use(express.json());
 
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
+
+app.use(methodOverride("_method"));
+app.use(cookieParser());
+
+app.use(
+  session({
+    secret: "libr@ry-Aplic@tion",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 app.use('/', mainRouter);
 
