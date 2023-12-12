@@ -22,7 +22,7 @@ app.use(
     cookie: { secure: true }
   })
 );
-app.use(require("./middlewares/auth-middleware"))
+app.use(require("./middleware/auth-middleware"))
 
 app.use('/', mainRouter);
 

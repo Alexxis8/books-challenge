@@ -19,6 +19,7 @@
   
           <h1 class="text-white mb-4">Register a new user</h1>
   
+          <p id="errors" style="color: rgb(255, 0, 0);"><%= message != null ?  message  : "" %></p>
           <form action="/users/register" method="POST" class="card" style="border-radius: 15px;">
             <div class="card-body">
   
@@ -30,7 +31,7 @@
                 </div>
                 <div class="col-md-9 pe-5">
   
-                  <input type="text" name="name" class="form-control form-control-lg" required/>
+                  <input type="text" name="name" class="form-control form-control-lg" />
   
                 </div>
               </div>
@@ -45,7 +46,7 @@
                 </div>
                 <div class="col-md-9 pe-5">
   
-                  <input type="email" name="email" class="form-control form-control-lg" placeholder="example@gmail.com" required/>
+                  <input type="email" name="email" class="form-control form-control-lg" placeholder="example@gmail.com" />
   
                 </div>
               </div>
@@ -60,7 +61,7 @@
                 </div>
                 <div class="col-md-9 pe-5">
   
-                  <input type="text" name="country" class="form-control form-control-lg" placeholder="Argentina" required/>
+                  <input type="text" name="country" class="form-control form-control-lg" placeholder="Argentina" />
   
                 </div>
               </div>
@@ -75,7 +76,7 @@
                 </div>
                 <div class="col-md-9 pe-5">
   
-                  <input type="password" name="password" class="form-control form-control-lg" required>
+                  <input type="password" name="password" class="form-control form-control-lg" >
   
                 </div>
               </div>
@@ -90,9 +91,9 @@
                 </div>
                 <div class="col-md-9 pe-5">
   
-                  <input type="radio" name="category" id="admin" value="1" required/>
+                  <input type="radio" name="category" id="admin" value="1" />
                   <label for="admin">Admin</label>
-                  <input type="radio" name="category" id="user" value="2" required/>
+                  <input type="radio" name="category" id="user" value="2" />
                   <label for="user">User</label>
   
                 </div>
@@ -113,5 +114,36 @@
   </section>
 </div>
 <%- include('partials/footer.ejs') %>
+
+<script>  
+  const formElement = document.querySelector('form');
+  const errorElement = document.querySelector("#errors")
+  
+  formElement.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if(formElement.name.value.trim() == '') {            
+        errorElement.innerHTML = 'Es necesario ingresar un nombre'
+        return;
+    }
+    
+    if(formElement.email.value.trim() == '') {            
+        errorElement.innerHTML = 'Email incorrecto'
+        return;
+    }
+
+    if(formElement.country.value.trim() === '') {
+      errorElement.innerHTML = 'Es necesario ingresar un pais'
+      return;
+    }
+    
+    if(formElement.password.value.trim() === '') {
+      errorElement.innerHTML = 'Es necesario ingresar una contraseña'
+      return;
+    }
+
+    formElement.submit()
+  });
+</script>
 </body>
 </html>
