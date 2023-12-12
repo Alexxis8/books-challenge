@@ -34,6 +34,6 @@ router.get('/users/logout', mainController.logout);
 router.post('/users/login', validationLogin, mainController.processLogin);
 router.post('/books/delete/:id', mainController.deleteBook);
 router.get('/books/edit/:id', mainController.edit);
-router.put('/books/edit/:id', mainController.processEdit);
+router.post('/books/edit/:id', mainController.processEdit);
 
 module.exports = router;
