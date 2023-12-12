@@ -47,9 +47,9 @@ const mainController = {
       })
       .catch((error) => console.log(error));
   },
-  deleteBook: (req, res) => {
+  deleteBook: async (req, res) => {
     // Implement delete book
-    db.Book.findByPk( req.params.id,{
+    db.Book.destroy({
       include: [{ association: "authors" }],
       where: {
         id: {
@@ -58,8 +58,9 @@ const mainController = {
       }
     })
       .then( books => {
-      return  res.render('home',  {books , message: req.session.message })
-      } ).catch((error) => console.log(error));
+        res.render('home', { books, message: req.session.message })
+      } )
+
   },
   authors: (req, res) => {
     db.Author.findAll()
@@ -118,7 +119,7 @@ const mainController = {
       res.cookie("usuario", userToValidate.email)
     }
     
-    const books = await db.Book.findAll({ include: [{ association: "authors" }]})
+    await db.Book.findAll({ include: [{ association: "authors" }]})
     const userFound = db.User.findOne({
       where: {
         email: userToValidate.email,
@@ -152,7 +153,6 @@ const mainController = {
     })
   },
   logout: async(req , res) =>{
-    await db.Book.findAll({ include: [{ association: "authors" }]})
     req.session.destroy();
     return res.redirect('/')
   },

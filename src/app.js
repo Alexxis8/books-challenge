@@ -1,6 +1,5 @@
 const express = require('express');
 const mainRouter = require('./routes/main');
-const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
@@ -12,16 +11,18 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 
-app.use(methodOverride("_method"));
+
 app.use(cookieParser());
 
 app.use(
   session({
-    secret: "libr@ry-Aplic@tion",
+    secret: "secret",
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: true }
   })
 );
+app.use(require("./middlewares/auth-middleware"))
 
 app.use('/', mainRouter);
 
